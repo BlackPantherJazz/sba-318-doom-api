@@ -1,0 +1,20 @@
+{
+  "name": "sba-318-doom-api",
+  "version": "1.0.0",
+  "description": "An Express server application celebrating MF DOOM's legacy - albums, aliases, and reviews.",
+  "license": "ISC",
+  "author": "Henoc 'Henny' Montes ",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
