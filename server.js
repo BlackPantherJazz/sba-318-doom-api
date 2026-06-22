@@ -39,7 +39,6 @@ app.get('/', (req, res) => {
 });
 
 // 404 handler
-// 404 handler
 app.use((req, res, next) => {
   const error = new Error('Route not found. ALL CAPS when you spell the man name.');
   error.status = 404;

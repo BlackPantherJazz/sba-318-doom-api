@@ -5,28 +5,28 @@ const router = Router();
 
 // GET all reviews (with optional albumId filter)
 router.get('/', (req, res) => {
-    const { albumId } = req.query;
+  const { albumId } = req.query;
 
-    let results = reviews;
+  let results = reviews;
 
-    if (albumId) {
-        results = results.filter(
-            (review) => review.albumId === Number(albumId)
-        );
-    }
+  if (albumId) {
+    results = results.filter(
+      (review) => review.albumId === Number(albumId)
+    );
+  }
 
-    res.json(results);
+  res.json(results);
 });
 
-// GET single review by Id
+// GET single review by id
 router.get('/:id', (req, res) => {
-    const review = reviews.find((r) => r.id === Number(req.params.id));
+  const review = reviews.find((r) => r.id === Number(req.params.id));
 
-    if(!review) {
-        return res.status(404).json({ error: 'Review not found'});
-    }
+  if (!review) {
+    return res.status(404).json({ error: 'Review not found' });
+  }
 
-    res.json(review);
+  res.json(review);
 });
 
 // POST a new review
@@ -39,14 +39,18 @@ router.post('/', (req, res) => {
 
   const newReview = {
     id: reviews.length > 0 ? reviews[reviews.length - 1].id + 1 : 1,
-    albumId,
+    albumId: Number(albumId),
     username,
-    rating,
+    rating: Number(rating),
     comment: comment || '',
     date: new Date().toISOString().split('T')[0]
   };
 
   reviews.push(newReview);
+
+  if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+    return res.redirect('/');
+  }
   res.status(201).json(newReview);
 });
 

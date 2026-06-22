@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>MF DOOM API</h1>
+  <p>ALL CAPS when you spell the man name.</p>
+
+  <h2>Albums</h2>
+  <div id="albums"></div>
+
+  <h2>Leave a Review</h2>
+  <form action="/api/reviews" method="POST">
+    <label for="albumId">Album ID:</label>
+    <input type="number" name="albumId" id="albumId" required>
+
+    <label for="username">Your Name:</label>
+    <input type="text" name="username" id="username" required>
+
+    <label for="rating">Rating (1-10):</label>
+    <input type="number" name="rating" id="rating" min="1" max="10" required>
+
+    <label for="comment">Comment:</label>
+    <textarea name="comment" id="comment"></textarea>
+
+    <button type="submit">Submit Review</button>
+  </form>
+</body>
+</html>
