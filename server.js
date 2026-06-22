@@ -6,6 +6,9 @@ import albumsRouter from './routes/albums.js'
 import aliasRouter from  './routes/aliases.js'
 import reviewsRouter from './routes/reviews.js';
 
+import logger from './middleware/logger.js';
+import validator from './middleware/validator.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,6 +19,10 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Custom middleware
+app.use(logger);
+app.use(validator);
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -32,8 +39,18 @@ app.get('/', (req, res) => {
 });
 
 // 404 handler
-app.use((req, res) => {
-    res.status(404).json({ error: 'Route not found. ALL CAPS when you spell the man name'});
+// 404 handler
+app.use((req, res, next) => {
+  const error = new Error('Route not found. ALL CAPS when you spell the man name.');
+  error.status = 404;
+  next(error);
+});
+
+// Error-handling middleware
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    error: err.message || 'Something went wrong on the server.'
+  });
 });
 
 // Start Server
